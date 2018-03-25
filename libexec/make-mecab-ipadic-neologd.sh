@@ -54,21 +54,12 @@ ORG_DIC_NAME=mecab-ipadic-2.7.0-20070801
 NEOLOGD_DIC_NAME=mecab-ipadic-2.7.0-20070801-neologd-${YMD}
 
 if [ ! -e ${BASEDIR}/../build/${ORG_DIC_NAME}.tar.gz ]; then
-    STATUS_CODE=`curl --insecure -IL https://drive.google.com -s -w '%{http_code}\n' -o /dev/null`
-    if [ ${STATUS_CODE} = 200 ]; then
-        IS_NETWORK_ONLINE=1
-    else
-        echo "$ECHO_PREFIX Unable to access https://drive.google.com/"
-        echo "$ECHO_PREFIX     Status code : ${STATUS_CODE}"
-        echo "$ECHO_PREFIX Install error, please retry after re-connecting to network"
-        exit 1
-    fi
+    IS_NETWORK_ONLINE=1
 
-    curl --insecure -L "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM" -o "${ORG_DIC_NAME}.tar.gz"
+    curl --insecure -L "https://storage.googleapis.com/lib4df/mecab-ipadic-2.7.0-20070801.tar.gz" -o "${ORG_DIC_NAME}.tar.gz"
     if [ $? != 0 ]; then
         echo ""
         echo "$ECHO_PREFIX Failed to download $ORG_DIC_NAME"
-        echo "$ECHO_PREFIX Please check your network to download 'https://mecab.googlecode.com/files/${ORG_DIC_NAME}.tar.gz'"
         exit 1;
     fi
 else
